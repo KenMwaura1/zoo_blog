@@ -1,0 +1,10 @@
+
+Bonjour subscriber!
+
+A new blog was posted
+
+Title: {{blog.title}}
+Post: {{blog.content|truncate(25)}}
+
+Best Regards,
+Zoo
