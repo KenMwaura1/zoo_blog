@@ -10,7 +10,7 @@ photo_config(app)
 db_config(app)
 login_config(app)
 mail_config(app)
-migrate = Migrate(app, db) @ app.cli.command("db")
+migrate = Migrate(app, db)
 
 
 @app.cli.command("db")
