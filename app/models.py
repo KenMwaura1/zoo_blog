@@ -21,7 +21,7 @@ class User(UserMixin, db.Model):
     profile_pic_path = db.Column(db.String(150), default='default.png')
     secure_password = db.Column(db.String(255), nullable=False)
     blog = db.relationship('Blog', backref='user', lazy='dynamic')
-    comment = db.relationship('Comment', backref='user', lazy='dynamic')
+    comment = db.relationship('UserComment', backref='user', lazy='dynamic')
 
     @property
     def password(self):
@@ -33,6 +33,14 @@ class User(UserMixin, db.Model):
 
     def verify_password(self, password):
         return check_password_hash(self.secure_password, password)
+
+    def save_user(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
     def __repr__(self):
         return f'User: {self.username}'

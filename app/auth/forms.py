@@ -22,11 +22,11 @@ class RegForm(FlaskForm):
     submit = SubmitField('Sign Up')
 
     @staticmethod
-    def validate_email(data_field):
+    def validate_email(self, data_field):
         if db.session.query(User.email).filter_by(email=data_field.data).first():
             raise ValidationError(message="The Email is already in use!")
 
     @staticmethod
-    def validate_username(data_field):
+    def validate_username(self, data_field):
         if db.session.query(User.username).filter_by(username=data_field.data).first():
             raise ValidationError(message="The Username is already in use!")
