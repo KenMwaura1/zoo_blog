@@ -1,5 +1,9 @@
+import os
+import secrets
+
 from flask import render_template, request, redirect, url_for, flash, abort
 from flask_login import login_required, current_user
+from PIL import Image, ImageEnhance
 from . import main
 from app.models import User, Blog, UserComment, Subscriber
 from .forms import UpdateProfile, CreateBlog
@@ -15,6 +19,7 @@ def home():
     :return: home.html
     """
     quotes = get_quotes()
+
     page = request.args.get('page', 1, type=int)
     blogs = db.session.query(Blog).order_by(db.desc(Blog.date_posted)).paginate(page=page, per_page=5)
     return render_template('home.html', quotes=quotes, blogs=blogs)
@@ -40,6 +45,20 @@ def profile():
         form.bio.data = current_user.bio
     profile_pic_path = url_for('static', filename='photos/' + current_user.profile_pic_path)
     return render_template('user-profile/user-profile.html', profile_pic_path=profile_pic_path, form=form)
+
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_filename = random_hex + f_ext
+    picture_path = os.path.join('app/static/photos', picture_filename)
+
+    output_size = (200, 200)
+    image = Image.open(form_picture)
+    image.thumbnail(output_size)
+    contrast = ImageEnhance.Contrast(image).enhance(1.5)
+    # contrast.save()
+    image.save(picture_path)
+    return picture_filename
 
 
 @main.route('/user/<name>/profile_update', methods=['POST', 'GET'])
@@ -70,7 +89,7 @@ def new_blog():
         for subscriber in subscribers:
             mail_message("New Blog Post", "email/new_blog", subscriber.email, blog=blog)
         flash('You Posted a new Blog')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.home'))
 
     return render_template('new-blog.html', form=form)
 
@@ -137,5 +156,5 @@ def delete_post(blog_id):
 def user_posts(username):
     user = User.query.filter_by(username=username).first()
     page = request.args.get('page', 1, type=int)
-    blogs = Blog.query.filter_by(user=user).order_by(Blog.posted.desc()).paginate(page=page, per_page=4)
+    blogs = Blog.query.filter_by(user=user).order_by(db.desc(Blog.date_posted)).paginate(page=page, per_page=4)
     return render_template('user-posts.html', blogs=blogs, user=user)
