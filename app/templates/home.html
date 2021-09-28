@@ -1,9 +1,8 @@
 {% extends "base.html"%}
 
 {% block content %}
-    <h1> test</h1>
     <div class="container landing">
-        <div class="row ">
+        <div class="row">
             {% if current_user.is_authenticated %}
                 <div class="col-md-3 "><a class="btn btn-sm btn-info " id="ref" href="{{url_for('main.new_blog')}}">Post</a></div>
             {% endif %}
@@ -17,17 +16,17 @@
                     <div class="container bg mb-2">
                         <hr>
                         <div class="row ">
-                            <div class="col-md-2 ">
-                                <img class="rounded-circle blog-img mr-10" src="{{ url_for('static', filename='photos/' + blog.user.profile_pic_path) }}">
-                                <p><a href="{{url_for('main.user_posts',username = blog.user.username)}}"><span  style="color: blue"><strong>{{blog.user.username | title}}</strong></span> </a> </p>
+                            <div class="avatar mx-auto float-left">
+                                <img src="{{ url_for('static', filename='photos/' + blog.user.profile_pic_path) }}" class="rounded-circle img-fluid">
+                                <p class="cyan-text"> Posted by:<a href="{{url_for('main.user_posts',username = blog.user.username)}}"><span  class=" badge badge-success ml-5 rounded-pill"style="color: blue"><strong>{{blog.user.username | title}}</strong></span> </a> </p>
                             </div>
-                            <div class="col-md-10 pr-4 d-justify userblog">
+                            <div class="col-md-6">
                                 <p>Posted on : {{blog.date_posted.strftime('%d-%m-%Y')}}</p>
                                 <h4><a href="{{url_for('main.blog',id = blog.id)}}">{{blog.title | upper}}</a></h4>
                                 <p>{{blog.content}}</p>
-                                <p> <a class="btn btn-sm btn-info" href="{{url_for('main.blog',id = blog.id)}}" > Comment</a> {{blog.comment.count()}} Comments</p>
-
+                                <p> <a class="btn btn-sm rounded-pill pink-gradient" href="{{url_for('main.blog',id = blog.id)}}" > Comment</a> {{blog.comment.count()}} Comments</p>
                             </div>
+
                         </div>
                         <hr>
                     </div>
@@ -47,17 +46,28 @@
                 {% endfor %}
 
             </div>
+
             <div class="col-md-4">
-                <div class="container">
-                    {% for quote in quotes %}
-                    <div class="card cardquote">
-                        <div class="card-title">
-                            <h4>A quote by: <span style="color: rgb(3, 3, 3)">{{quote.author}}</span> </h4>
-                        </div>
-                        <p class="card-text">{{quote.text}}</p>
+                <div class="card card-cascade narrower">
+
+                    <!-- Card image -->
+                    <div class="view view-cascade gradient-card-header peach-gradient">
+
+                        <!-- Title -->
+                        <h2 class="card-header-title">A quote by: <span class="teal-text">{{quotes.author}}</span></h2>
                     </div>
-                    {% endfor %}
+
+                    <!-- Card content -->
+                    <div class="card-body card-body-cascade text-center">
+
+                        <!-- Text -->
+                        <p class="card-text">{{quotes.text}}.</p>
+
+                    </div>
+
                 </div>
+                <!-- Card -->
+
                 <div class="container-fluid">
                     {% for message in get_flashed_messages() %}
                         <div class="alert alert-success">

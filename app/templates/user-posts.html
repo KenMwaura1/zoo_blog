@@ -12,15 +12,14 @@
                     <div class="bg mb-2" >
                         <hr>
                         <div class="row">
-                            <div class="col-md-2">
-                                <img class="rounded-circle blog-img mr-10" src="{{ url_for('static', filename='photos/' + blog.user.profile_pic_path) }}">
+                            <div class="avatar mx-auto">
+                                <img src="{{ url_for('static', filename='photos/' + blog.user.profile_pic_path) }}" class="rounded-circle img-fluid">
                             </div>
                             <div class="col-md-6">
-                                <p>By <span style="color: blue">{{blog.user.username}}</span>  on {{blog.posted.strftime('%d-%m-%Y')}}</p>
+                                <p>By <span style="color: blue">{{blog.user.username}}</span>  on {{blog.date_posted.strftime('%d-%m-%Y')}}</p>
                                 <h3>Tittle: <a href="{{url_for('main.blog',id = blog.id)}}">{{blog.title}}</a></h3>
                                 <p>{{blog.content}}</p>
                                 <p>{{blog.comment.count()}} Comments</p>
-
                             </div>
                             <div class="col-md-4">
                                 <form class="form-inline" action="{{url_for('main.comment',blog_id = blog.id)}}" method="POST">

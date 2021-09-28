@@ -18,7 +18,7 @@
                                 {{ message }}
                             </div>
                         {% endfor %}
-                        <p>By <span style="color: blue">{{blog.user.username}}</span>  on {{blog.posted.strftime('%d-%m-%Y')}}</p>
+                        <p>By <span style="color: blue">{{blog.user.username}}</span>  on {{blog.date_posted.strftime('%d-%m-%Y')}}</p>
                         <h3>Title : {{blog.title}} <span style="float: right;font-size:18px;margin-right:20px">{{blog.comment.count()}} Comments</span></h3>
                         <p>{{blog.content}}</p>
                         <div>
