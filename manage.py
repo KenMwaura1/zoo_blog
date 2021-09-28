@@ -1,8 +1,11 @@
 from flask_migrate import Migrate
+import os
+from dotenv import load_dotenv
 from app import create_app
 from config import config_options
 from app.commands import photo_config, db_config, login_config, mail_config, db
 
+load_dotenv()
 app = create_app('development')
 app.config.from_object(config_options['development'])
 
@@ -25,6 +28,8 @@ def test():
     :return: tests passed
     """
     import unittest
+    SQLALCHEMY_DATABASE_URI = os.environ.get("TEST_SQLALCHEMY_DATABASE_URI")
+    print(SQLALCHEMY_DATABASE_URI)
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
 
