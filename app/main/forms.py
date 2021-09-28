@@ -21,7 +21,7 @@ class UpdateProfile(FlaskForm):
     submit = SubmitField('Update')
 
     @staticmethod
-    def validate_email(email):
+    def validate_email(self, email):
         if (
                 email.data != current_user.email
                 and User.query.filter_by(email=email.data).first()
@@ -29,7 +29,7 @@ class UpdateProfile(FlaskForm):
             raise ValidationError("The Email is already n use!")
 
     @staticmethod
-    def validate_username(username):
+    def validate_username(self, username):
         if (
                 username.data != current_user.username
                 and User.query.filter_by(username=username.data).first()

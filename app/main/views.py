@@ -135,7 +135,7 @@ def subscribe():
     email = request.form.get('subscriber')
     new_subscriber = Subscriber(email=email)
     new_subscriber.save_subscriber()
-    mail_message("Subscribed to D-Blog", "email/welcome_subscriber", new_subscriber.email,
+    mail_message("Welcome to Zoo Blog", "email/welcome_subscriber", new_subscriber.email,
                  new_subscriber=new_subscriber)
     flash('Subscription successful')
     return redirect(url_for('main.home'))

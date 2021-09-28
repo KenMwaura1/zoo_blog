@@ -1,4 +1,5 @@
 import requests
+from random import randint
 
 
 def get_quotes():
@@ -8,4 +9,7 @@ def get_quotes():
     url = 'https://type.fit/api/quotes'
     response = requests.get(url)
     quotes = response.json()
-    return quotes
+    num = randint(1, 30)
+    quote = quotes[num]
+    print(quote)
+    return quote
