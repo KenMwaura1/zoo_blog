@@ -3,6 +3,8 @@ a personal blogging website where you can create and share your opinions and oth
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
+![app-logo](app/static/images/Zoo-blog-logo.png)
+
 ## User story
 1. As a user, I would like to view the blog posts on the site
 2. As a user, I would like to comment on blog posts
@@ -27,4 +29,4 @@ a personal blogging website where you can create and share your opinions and oth
 ![Screenshot of app](app/static/images/Screenshot_127.png)
 ## Live Site
 
-[link to deployed site]()
+[link to deployed site](https://zoo-blog.herokuapp.com/)
